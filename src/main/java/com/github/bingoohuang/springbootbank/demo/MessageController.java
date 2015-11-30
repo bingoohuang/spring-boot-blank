@@ -1,5 +1,6 @@
 package com.github.bingoohuang.springbootbank.demo;
 
+import com.github.bingoohuang.blackcat.javaagent.annotations.BlackcatCreateTransformedClassFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
+@BlackcatCreateTransformedClassFile
 public class MessageController {
     private final MessageRepository messageRepository;
 
@@ -20,6 +22,7 @@ public class MessageController {
 
     @RequestMapping("/")
     public ModelAndView list() {
+        System.err.println("Nano:" + System.currentTimeMillis());
         Iterable<Message> messages = this.messageRepository.findAll();
         return new ModelAndView("messages/list", "messages", messages);
     }
